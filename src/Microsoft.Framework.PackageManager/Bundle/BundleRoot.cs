@@ -157,7 +157,10 @@ exec ""{1}dotnet"" --appbase ""$DOTNET_APPBASE"" Microsoft.Framework.Application
                     string.Format(template, relativeAppBase, runtimeFolder, commandName).Replace("\r\n", "\n"));
                 if (PlatformHelper.IsMono)
                 {
-                    MarkExecutable(scriptPath);
+                    if (!FileOperationUtils.MarkExecutable(scriptPath))
+                    {
+                        Reports.Information.WriteLine("Failed to mark {0} as executable".Yellow(), scriptPath);
+                    }
                 }
             }
         }
